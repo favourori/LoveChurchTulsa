@@ -1,17 +1,37 @@
 let express = require("express");
 let routes = express.Router();
 
-
+//importing Model for Slider
+let Slider = require("../model/slider");
 
 routes.get("/sliders", (req, res) => {
-  res.status(200).send({
-    title: "Slider titles",
-    image: "Slider Images here"
+  Slider.find().then(sliders => {
+    res.status(200).send({
+      success: true,
+      sliderData: sliders
+    });
   });
 });
 
 routes.post("/sliders", (req, res) => {
-  res.status(200).send("You've hit the post route for sliders");
+  //creating a new Slider
+  let slider = new Slider({
+    title: req.body.title,
+    subtitle: req.body.subtitle,
+    image: req.body.image
+  });
+
+  slider
+    .save()
+    .then(savedData => {
+      res.status(200).send({
+        success: true,
+        newSlider: savedData
+      });
+    })
+    .catch(err => {
+      res.send(err.message);
+    });
 });
 
 module.exports = routes;
