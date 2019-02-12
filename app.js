@@ -7,7 +7,7 @@ let mongoose = require("mongoose");
 
 mongoose
   .connect(
-    "mongodb://favourtheo:1A2b3c--@ds257054.mlab.com:57054/lovechurchtulsa"
+    ""
   )
   .then(() => {
     console.log("Connected to Mongo Db");
